@@ -118,14 +118,45 @@
                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>empty-javadoc-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>javadoc</classifier>
+                            <classesDirectory>${basedir}/javadoc</classesDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
     <name>SQLib</name>
-    <description>A application used as an example on how to set up pushing
+    <description>
+        A application used as an example on how to set up pushing
         its components to the Central Repository.
     </description>
-    <url>https://github.com/waseemw/sqlib</url>
+    <url>https://github.com/waseemw/${project.name}</url>
     <developers>
         <developer>
             <name>Waseem Wasaya</name>
@@ -133,8 +164,8 @@
         </developer>
     </developers>
     <scm>
-        <connection>scm:git:https://github.com/waseemw/sqlib.git</connection>
-        <developerConnection>scm:git:ssh://github.com/waseemw/sqlib.git</developerConnection>
+        <connection>scm:git:https://github.com/waseemw/${project.name}.git</connection>
+        <developerConnection>scm:git:ssh://github.com/waseemw/${project.name}.git</developerConnection>
         <url>http://github.com/waseemw/sqlib</url>
     </scm>
     <licenses>

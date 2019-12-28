@@ -25,14 +25,12 @@ import org.jdbi.v3.core.statement.Update
 import org.slf4j.impl.SimpleLogger
 import kotlin.reflect.KClass
 
+/**
+ * An SQL connection, which is essentially a HikariCP connection pool that is wrapped by JDBI in order to make queries easier.
+ * It also sets the logging level of the included logger.
+ */
 @Suppress("unused", "MemberVisibilityCanBePrivate")
-class SqlibConnection(
-    url: String,
-    username: String,
-    password: String,
-    maxPoolSize: Int = 5,
-    logLevel: String = "Error"
-) {
+class SqlibConnection(url: String, username: String, password: String, maxPoolSize: Int = 5, logLevel: String = "Error") {
     private var threadBinds: ThreadLocal<Array<out Any>> = ThreadLocal()
     private val jdbi: Jdbi
 
@@ -46,22 +44,27 @@ class SqlibConnection(
         jdbi = Jdbi.create(HikariDataSource(hikariConfig))
     }
 
+    /** Add a bindings map to be used in all queries in addition to the ones provided per method, only to the calling thread */
     fun addThreadMap(vararg binds: Any) {
         threadBinds.set(binds)
     }
 
+    /** Clears the current thread's bindings */
     fun clear() {
         threadBinds.remove()
     }
 
+    /** Returns a list of elements of the type provided, empty list will be returned if nothing was found */
     fun <T : Any> fetch(type: KClass<T>, sql: String, vararg binds: Any): List<T> {
         jdbi.open().use { return bind<Query>(it.createQuery(sql), *binds).mapTo(type.java).list() }
     }
 
+    /** Execute a query that does not return any data. This method returns the result of the execution (i.e. affected rows) */
     fun execute(sql: String, vararg binds: Any): Int {
         jdbi.open().use { return bind<Update>(it.createUpdate(sql), *binds).execute(); }
     }
 
+    /** Returns a single element of the type provided, or null if not found  */
     fun <T : Any> fetchOne(type: KClass<T>, sql: String, vararg binds: Any, default: T): T? {
         return fetch(type, sql, *binds).getOrElse(0) { default }
     }
