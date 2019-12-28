@@ -18,11 +18,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
+    <packaging>jar</packaging>
+
     <groupId>io.waseem</groupId>
     <artifactId>sqlib</artifactId>
-    <version>0.0.1</version>
-    <packaging>jar</packaging>
-    <inceptionYear>2019</inceptionYear>
+    <version>0.0.2</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -168,6 +168,7 @@
         <developerConnection>scm:git:ssh://github.com/waseemw/${project.name}.git</developerConnection>
         <url>http://github.com/waseemw/sqlib</url>
     </scm>
+    <inceptionYear>2019</inceptionYear>
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>

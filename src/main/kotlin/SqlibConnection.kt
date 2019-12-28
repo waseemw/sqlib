@@ -65,7 +65,7 @@ class SqlibConnection(url: String, username: String, password: String, maxPoolSi
     }
 
     /** Returns a single element of the type provided, or null if not found  */
-    fun <T : Any> fetchOne(type: KClass<T>, sql: String, vararg binds: Any, default: T): T? {
+    fun <T : Any> fetchOne(type: KClass<T>, sql: String, vararg binds: Any, default: T? = null): T? {
         return fetch(type, sql, *binds).getOrElse(0) { default }
     }
 
